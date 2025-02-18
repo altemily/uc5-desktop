@@ -1,0 +1,27 @@
+### Rota para listar produtos
+GET http://localhost:3000
+Content-Type: application/json
+###
+
+###
+POST http://localhost:3000
+Content-Type: application/json
+
+{
+    "id": 1,
+    "nome": "Monitor 21'",
+    "preco": 1400,
+    "quantidade": 10
+}
+
+###
+
+###
+PUT http://localhost:3000/1
+Content-Type: application/json
+
+{
+    "novoNome": "Monitor 25'",
+    "novoPreco": 1400,
+    "novaQuantidade": 5
+}
