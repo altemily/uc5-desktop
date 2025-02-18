@@ -1,0 +1,22 @@
+### Rota para pegar os produtos
+GET http://localhost:3000/produtos
+
+### fechando a requicisao
+
+### Rota criando o produto
+POST http://localhost:3000/produtos
+Content-Type: application/json
+
+{
+    "id":"2",
+    "nome":"GTX 5090 24gb",
+    "preco":19999
+}
+
+###
+
+### Pegar ptoduto por id
+GET http://localhost:3000/produtos/2
+Content-Type: application/json
+###
+
