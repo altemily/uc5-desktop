@@ -1,0 +1,15 @@
+### Teste do endpoint GET
+GET http://localhost:3000/livros
+
+### Teste do endpoint POST
+POST http://localhost:3000/livros
+Content-Type: application/json
+
+{
+    "id": 1,
+    "titulo": "Exemplo",
+    "autor": "Exemplo",
+    "anoPublicacao": 2023,
+    "genero": "Exemplo",
+    "sinopse": "Exemplo"
+}
