@@ -8,15 +8,38 @@ POST http://localhost:3000/produtos
 Content-Type: application/json
 
 {
-    "id":"2",
+    "id":"3",
     "nome":"GTX 5090 24gb",
     "preco":19999
 }
 
 ###
 
-### Pegar ptoduto por id
+### Pegar produto por ID
 GET http://localhost:3000/produtos/2
 Content-Type: application/json
+
 ###
 
+### PUT - Editar produtos
+PUT http://localhost:3000/produtos/1
+Content-Type: application/json
+
+{
+    "novoNome": "GTX 3070 16gb",
+    "novoPreco": 12000
+}
+
+###
+
+### DELETE - Deletar produto
+DELETE http://localhost:3000/produtos/1
+Content-Type: application/json
+
+###
+
+### - DELETE - Excluindo todos os produtos
+DELETE http://localhost:3000/produtos
+Content-Type: application/json
+
+###

@@ -91,6 +91,17 @@ app.delete('/produtos/:id', (requisicao, resposta) => {
   }
 });
 
+// Deletando todos os produtos
+app.delete('/produtos', (requisicao, resposta) => {
+  try {
+    bancoDados.length = 0
+    resposta.status(200).json({mensagem: "Todos os produtos deletados com sucesso." }) // Retorna uma mensagem de sucesso.
+  } catch (error) {
+    resposta.status(500).json({ mensagem: "Erro ao deletar todos os produtos.", erro: error.message }); // Retorna uma mensagem de erro
+  }
+})
+
+
 // Inicializando o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
