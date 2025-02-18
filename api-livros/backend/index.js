@@ -6,7 +6,7 @@ const livros = require('../backend/livros');
 // Configurando o dotenv
 dotenv.config();
 
-// Definindo a porta do servidor
+// Definindo a porta do servidor 
 const port = process.env.PORTA;
 
 // Middleware para interpretar JSON
