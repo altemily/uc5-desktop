@@ -1,0 +1,21 @@
+GET http://localhost:3001/produtos
+
+POST http://localhost:3001/produtos
+Header: Content-Type: application/json
+Corpo:
+{
+    "id": 1,
+    "nome": "GTX 4090 24gb",
+    "preco": 14450
+}
+
+PUT http://localhost:3001/produtos/1
+Header: Content-Type: application/json
+Corpo:
+{
+    "nome": "GTX 4090 24gb - Atualizada",
+    "preco": 14500
+}
+
+
+DELETE http://localhost:3001/produtos/1
