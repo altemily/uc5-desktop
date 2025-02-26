@@ -1,7 +1,7 @@
 // Importando os módulos necessários para a aplicação
 const express = require('express'); // Framework para criação de servidores no Node.js
 const dotenv = require('dotenv'); // Biblioteca para gerenciar variáveis de ambiente
-const { Pool } = require('./src/config/database'); // Importa a conexão com o banco de dados PostgreSQL
+const { pool } = require('./src/config/database'); // Importa a conexão com o banco de dados PostgreSQL
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -81,7 +81,7 @@ app.put("/produtos/:id", async (requisicao, resposta) => {
 });
 
 
-// Rota para deletar um produto
+// Rota para deletar um produto por ID
 app.delete("/produtos/:id", async (requisicao, resposta) => {
   try {
     const id = requisicao.params.id;
@@ -91,8 +91,9 @@ app.delete("/produtos/:id", async (requisicao, resposta) => {
     if (resultado1.rows.length === 0) {
       return resposta.status(404).json({ mensagem: "Produto não encontrado" });
     }
-    
-    
+    const dados2 = [id]
+    const consulta2 = `DELETE * FROM produto WHERE id = $1`
+    await pool.query(consulta2, dados2)
     resposta.status(200).json({ mensagem: "Produto deletado com sucesso" });
   } catch (error) {
     resposta.status(500).json({
@@ -103,16 +104,18 @@ app.delete("/produtos/:id", async (requisicao, resposta) => {
 });
 
 
-// Rota para buscar um produto específico
-app.get("/produtos/:id", (requisicao, resposta) => {
+// Rota para buscar um produto por ID
+app.get("/produtos/:id", async (requisicao, resposta) => {
   try {
     // o id do paramentro é sempre string
     const id = requisicao.params.id;
-    const produto = bancoDados.find(elemento => elemento.id === id);
-    if(!produto){
+    const dados1 = [id]
+    const consulta1 = `SELECT * FROM produto WHERE id = $1`
+    const resultado1 = await pool.query(consulta1, dados1)
+    if(resultado1.rows.length === 0){
       return resposta.status(404).json({mensagem:"Produto não encontrado"})
     }
-    resposta.status(200).json(produto)
+    resposta.status(200).json(resultado1.rows)
   } catch (error) {
     resposta.status(500).json({
       mensagem: "Erro ao buscar produto",
@@ -123,9 +126,10 @@ app.get("/produtos/:id", (requisicao, resposta) => {
 
 
 // Rota para excluir todos os produtos
-app.delete("/produtos", (requisicao, resposta) => {
+app.delete("/produtos", async (requisicao, resposta) => {
   try {
-    bancoDados.length = 0;
+    const consulta = `DELETE FROM produto`
+    await pool.query(consulta)
     resposta.status(200).json({mensagem: "Todos os produtos foram excluidos!"})
   } catch (error) {
     resposta.status(500).json({

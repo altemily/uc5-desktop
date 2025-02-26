@@ -1,21 +1,47 @@
-GET http://localhost:3001/produtos
+### Rota para pegar os produtos
+GET http://localhost:3000/produtos
 
-POST http://localhost:3001/produtos
-Header: Content-Type: application/json
-Corpo:
+### fechando a requicisao
+
+### Rota criando o produto
+POST http://localhost:3000/produtos
+Content-Type: application/json
+
 {
-    "id": 1,
-    "nome": "GTX 4090 24gb",
-    "preco": 14450
+    
+    "nome":"GTX 5090 24gb",
+    "preco":19999,
+    "quantidade": 12
 }
 
-PUT http://localhost:3001/produtos/1
-Header: Content-Type: application/json
-Corpo:
+###
+
+### Pegar produto por ID
+GET http://localhost:3000/produtos/3
+Content-Type: application/json
+
+###
+
+### PUT - Editar produtos
+PUT http://localhost:3000/produtos/3
+Content-Type: application/json
+
 {
-    "nome": "GTX 4090 24gb - Atualizada",
-    "preco": 14500
+    "novoNome": "GTX 3070 16gb",
+    "novoPreco": 12000,
+    "novaQuantidade": 10
 }
 
+###
 
-DELETE http://localhost:3001/produtos/1
+### DELETE - Deletar produto
+DELETE http://localhost:3000/produtos/1
+Content-Type: application/json
+
+###
+
+### - DELETE - Excluindo todos os produtos
+DELETE http://localhost:3000/produtos
+Content-Type: application/json
+
+###
