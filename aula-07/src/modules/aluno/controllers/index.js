@@ -16,10 +16,9 @@ class AlunoController {
 
     static async editar(requisicao, resposta) {
         try {
-            const matricula = requisicao.params.id;
+            const matricula = requisicao.params.matricula;
             const { nome, email, senha } = requisicao.body;
-            
-            if (!nome && !email && !senha) {
+            if (!nome || !email ||!senha) {
                 return resposta.status(400).json({ mensagem: "Pelo menos um campo deve ser atualizado." });
             }
             const alunoAtualizado = await AlunoModel.editar(matricula, { nome, email, senha });
@@ -44,10 +43,10 @@ class AlunoController {
         }
     }
 
-    static async listarPorID(requisicao, resposta) {
+    static async listarPorMatricula(requisicao, resposta) {
         try {
-            const matricula = requisicao.params.id;
-            const aluno = await AlunoModel.listarPorID(matricula);
+            const matricula = requisicao.params.matricula;
+            const aluno = await AlunoModel.listarPorMatricula(matricula);
             if (!aluno) {
                 return resposta.status(400).json({ mensagem: "Aluno não encontrado." });
             }
@@ -57,13 +56,14 @@ class AlunoController {
         }
     }
 
-    static async excluirPorID(requisicao, resposta) {
+    static async excluirPorMatricula(requisicao, resposta) {
         try {
-            const matricula = requisicao.params.id;
-            const alunoExcluido = await AlunoModel.excluirPorID(matricula);
+            const matricula = requisicao.params.matricula;
+            const alunoExcluido = await AlunoModel.listarPorMatricula(matricula);
             if (!alunoExcluido) {
                 return resposta.status(400).json({ mensagem: "Aluno não encontrado." });
             }
+            await AlunoModel.excluirPorMatricula(matricula)
             resposta.status(200).json({ mensagem: "Aluno excluído com sucesso." });
         } catch (error) {
             resposta.status(500).json({ mensagem: "Erro ao excluir aluno.", erro: error.message });
