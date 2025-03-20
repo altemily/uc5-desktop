@@ -21,8 +21,8 @@ class AlunoController {
             if (!nome || !email ||!senha) {
                 return resposta.status(400).json({ mensagem: "Pelo menos um campo deve ser atualizado." });
             }
-            const alunoAtualizado = await AlunoModel.editar(matricula, { nome, email, senha });
-            if (!alunoAtualizado) {
+            const alunoAtualizado = await AlunoModel.editar(matricula, nome, email, senha);
+            if (alunoAtualizado.length === 0) {
                 return resposta.status(400).json({ mensagem: "Aluno não encontrado." });
             }
             resposta.status(200).json({ mensagem: "Aluno atualizado com sucesso", aluno: alunoAtualizado });
@@ -47,7 +47,7 @@ class AlunoController {
         try {
             const matricula = requisicao.params.matricula;
             const aluno = await AlunoModel.listarPorMatricula(matricula);
-            if (!aluno) {
+            if (aluno.length === 0) {
                 return resposta.status(400).json({ mensagem: "Aluno não encontrado." });
             }
             resposta.status(200).json(aluno);
