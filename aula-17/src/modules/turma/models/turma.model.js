@@ -1,15 +1,20 @@
+
+
+
+
+crie um model TurmaModel baseado neste:
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/configDB');
 
-const ProfessorModel = sequelize.define('ProfessorModel', {
+const AlunoModel = sequelize.define('AlunoModel', {
   matricula: {
-    type: DataTypes.CHAR(5),
+    type: DataTypes.CHAR(8),
     allowNull: false,
     primaryKey: true,
     validate: {
       is: {
-        args: /^[A-Za-z]\d{4}$/,
-        msg: 'A matrícula deve começar com uma letra seguida de 4 números!'
+        args: /^[A-Za-z]\d{7}$/,
+        msg: 'A matrícula deve começar com uma letra seguida de 7 números!'
       }
     }
   
@@ -23,8 +28,8 @@ const ProfessorModel = sequelize.define('ProfessorModel', {
         allowNull: false,
         unique: true,
         validate:{
-            isEmail:{
-                args: /^[A-Za-z0-9._%+-]+@rn\.senac\.br$/,
+            is:{
+                args: /^[A-Za-z0-9._%+-]+@edum\.rn\.senac\.br$/,
                 msg: 'Forneça um email válido!'
             },
             len:{
@@ -54,11 +59,18 @@ const ProfessorModel = sequelize.define('ProfessorModel', {
   },
 
   {
-    tableName: 'professor',
+    tableName: 'aluno',
     createdAt: 'criado_em',
     updatedAt: 'atualizado_em'
   },
 );
 
 
-module.exports = ProfessorModel;
+module.exports = AlunoModel;
+
+
+mas para os seguintes argumentos:
+
+ cod, nome, descricao, turno, professor_matricula
+
+ adiciones as validacoes necessárias.

@@ -1,10 +1,7 @@
-const { Op } = require ('sequelize')
-const SecretarioModel = require('../models/secretario.model');
 const AlunoModel = require('../../aluno/models/aluno.model');
-const sequelize = require('../../../config/configDB');
 
 
-class SecretarioController{
+class AlunoController{
     static async criarAluno(req, res){
       try {
         const{matricula, nome, email, senha, turma_cod} = req.body;
@@ -12,7 +9,7 @@ class SecretarioController{
           return res.status(400).json({msg: 'Todos os campos devem ser preenchidos!'})
         }
         const aluno = await AlunoModel.create({matricula, nome, email,senha, turma_cod})
-        res.status(201).json(aluno)
+        res.status(201).json(aluno);
       } catch (error) {
         res.status(500).json({msg: 'Erro interno do servidor. Por favor, tente mais tarde!'})
       }
@@ -24,7 +21,7 @@ class SecretarioController{
         if(alunos.length === 0){
           return res.status(200).json({msg: 'Não há alunos a serem exibidos!'})
         }
-        res.status(200).json(alunos)
+        res.status(200).json(alunos);
       } catch (error) {
         res.status(500).json({msg: 'Erro interno do servidor. Por favor, tente mais tarde!'})
       }
@@ -37,7 +34,7 @@ class SecretarioController{
         if(!aluno){
           return res.status(404).json({msg: 'Aluno não encontrado!'})
         }
-        res.status(200).json(aluno)
+        res.status(200).json(aluno);
       } catch (error) {
         res.status(500).json({msg: 'Erro interno do servidor. Por favor, tente mais tarde!'})
       }
@@ -69,10 +66,10 @@ class SecretarioController{
       }
     }
 
-    static async deletarAluno(req, res){
+    static async deletarAlunoPorMatricula(req, res){
       try {
         const matricula = req.params.matricula
-        const aluno = await AlunoModel.findByPk({matricula})
+        const aluno = await AlunoModel.findByPk(matricula)
         if(!aluno){
           return res.status(404).json({msg: 'Aluno não encontrado!'})
         }
@@ -86,4 +83,18 @@ class SecretarioController{
         res.status(500).json({msg: 'Erro interno do servidor. Por favor, tente mais tarde!'})
       }
     }
+    static async deletarTodosAlunos(req, res){
+      try {
+        await AlunoModel.destroy(
+          {
+            where: {}
+          });
+          res.status(200).json({msg: 'Alunos excluídos com sucesso!'})
+      } catch (error) {
+        res.status(500).json({msg: 'Erro interno do servidor. Por favor, tente mais tarde!'})
+      }
+    }
+
 }
+
+module.exports = AlunoController;
